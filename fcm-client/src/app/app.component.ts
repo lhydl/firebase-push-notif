@@ -46,4 +46,28 @@ export class AppComponent implements OnInit {
   hiddenHandler() {
     this.message = null
   }
+  calculateRows(token: string | any[]) {
+    const length = token.length;
+    if (length < 50) {
+      return 4;
+    } else if (length < 100) {
+      return 5;
+    } else if (length < 150) {
+      return 6;
+    } else {
+      return 7;
+    }
+  }
+
+  copyToken() {
+    const tokenField = document.getElementById("tokenField") as HTMLTextAreaElement;
+    if (tokenField) { // Check if the element is found
+      tokenField.select();
+      // document.execCommand("copy");
+      // alert("Token copied to clipboard!");
+    } else {
+      console.error("Token field not found");
+    }
+  }
+  
 }

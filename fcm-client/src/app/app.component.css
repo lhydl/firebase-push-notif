@@ -1,0 +1,8 @@
+.custom-bordered-container {
+    border: 2px rgb(178, 207, 219) solid;
+    padding: 16px; /* 4 * 4px for p-4 */
+    width: 75%; /* Represents w-75 */
+    background-color: #f8f9fa; /* Represents bg-light */
+    border-radius: 10px; /* Slightly rounded corners */
+  }
+  

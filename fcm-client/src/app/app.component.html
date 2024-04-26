@@ -1,26 +1,66 @@
-<div class="container m-5">
-  <div *ngIf="!message;">
-    No Message Arrived
-  </div>
-  <div *ngIf="token;">
-    {{token}}
-  </div>
-  <div class="toast-container position-fixed row justify-content-center align-items-center">
-    <ngb-toast *ngIf="message" [autohide]="true" (hidden)="hiddenHandler()" class="custom-toast">
-      <ng-template ngbToastHeader>
-        <div class="me-auto">
-          <img height="30" width="30" src="{{message?.notification?.image}}" class="rounded me-2" alt="...">
-          <strong class="mx-1">{{message?.notification?.title}}</strong>
-        </div>
-      </ng-template>
-      {{ message?.notification?.body }}
-      <hr>
-      <p>data:</p>
-      {{message?.data | json}}
-    </ngb-toast>
-  </div>
-  <div>
-    <button (click)="requestPermission()">CLICK TO ENABLE NOTIF</button>
+<div class="container my-5 d-flex flex-column justify-content-center align-items-center">
+  <!-- Border wrapper -->
+  <div class="custom-bordered-container">
+    <!-- Display selectable token with copy button -->
+    <div class="text-center" *ngIf="!message && !token">
+      <p><b>No Message or Token</b></p>
+      <p>For IOS devices, press below button to request notifications permission</p>
+      <p>For all other devices, enable notifications permission in the browser</p>
+    </div>
+    <div class="text-left" *ngIf="token">
+      <p><b>Your Device Token:</b></p>
+    </div>
+    <div class="input-group mb-4" *ngIf="token">
+      <textarea
+        class="form-control"
+        id="tokenField"
+        [rows]="calculateRows(token)"
+        [value]="token"
+        readonly
+        style="resize: none"
+      ></textarea>
+    </div>
+    <div class="text-end" *ngIf="token">
+      <button class="btn btn-outline-secondary" (click)="copyToken()">
+        Copy Token
+      </button>
+    </div>
+    
+
+    <!-- Toast container for notifications -->
+    <div class="toast-container position-fixed top-50 start-50 translate-middle">
+      <ngb-toast
+        *ngIf="message"
+        [autohide]="true"
+        (hidden)="hiddenHandler()"
+        class="custom-toast"
+      >
+        <ng-template ngbToastHeader>
+          <div class="d-flex align-items-center">
+            <img
+              height="30"
+              width="30"
+              src="{{message?.notification?.image}}"
+              class="rounded-circle me-2"
+              alt="Notification Icon"
+            />
+            <strong class="mx-1">{{message?.notification?.title}}</strong>
+          </div>
+        </ng-template>
+        <p>{{message?.notification?.body}}</p>
+        <hr>
+        <p>Data:</p>
+        <pre>{{message?.data | json}}</pre>
+      </ngb-toast>
+    </div>
+
+    <!-- Button to request notification permissions -->
+    <div class="row mt-4" *ngIf="!token">
+      <div class="col text-center">
+        <button class="btn btn-primary" (click)="requestPermission()">
+          Enable IOS Notifications
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
